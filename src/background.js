@@ -14,6 +14,9 @@ const setApplicationMenu = () => {
   Menu.setApplicationMenu(Menu.buildFromTemplate(menus));
 };
 
+const Store = require('electron-store');
+const store = new Store();
+
 
 app.on('ready', () => {
   setApplicationMenu();
@@ -21,13 +24,26 @@ app.on('ready', () => {
   const mainWindow = createWindow('main', {
     width: 480,
     height: 320,
+    frame:false
   });
 
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'app.html'),
-    protocol: 'file:',
-    slashes: true,
-  }));
+  if(store.get('config')==undefined){
+    mainWindow.loadURL(url.format({
+      pathname: path.join(__dirname, 'bingo.html'),
+      protocol: 'file:',
+      slashes: true,
+    }));
+  }else{
+    mainWindow.loadURL(url.format({
+      pathname: path.join(__dirname, 'app.html'),
+      protocol: 'file:',
+      slashes: true,
+    }));
+  }
+
+  mainWindow.openDevTools();
+
+  mainWindow.setMenu(null);
 });
 
 app.on('window-all-closed', () => {

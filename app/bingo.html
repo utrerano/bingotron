@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Bingo Electron</title>
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <script src="../node_modules/jquery/dist/jquery.js" onload="window.$ = window.jQuery = module.exports;"></script>
+  <script src="../node_modules/popper.js/dist/umd/popper.js"></script>
+  <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css">
+  <link href="stylesheets/main.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="col">
+      <h1 class="navbar-brand">Bingotron</h1>
+    </div>
+    <div class="col text-center">
+      <button type="button" id="refresh">
+        <i class="fa fa-refresh fa-2x" aria-hidden="true"></i>
+      </button> </div>
+    <div class="col text-center">
+      <button type="button" id="list">
+        <i class="fa fa-table fa-2x" aria-hidden="true"></i>
+      </button>
+    </div>
+  </nav>
+  <div class="fill" id="played" style="display:none;">
+    <table class="table table-bordered text-center table-dark carton-numbers">
+      <tbody id="tableBody">
+
+      </tbody>
+    </table>
+  </div>
+  <div class="fill" id="player">
+    <div class="stacked-icons">
+      <span class="fa-stack fa-5x" id="start">
+      <i class="fa fa-play-circle-o fa-stack-2x vmin"></i>
+      <strong class="fa-stack-1x bingo-text"></strong>
+    </span
+    </div>
+    <div class="stacked-icons" id="pause" style="display:none;">
+      <span class="fa-stack fa-5x" >
+        <i class="fa fa-circle fa-stack-2x vmin"></i>
+        <strong class="fa-stack-1x bingo-text" id="bingo-number"></strong>
+      </span>
+      </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+
+</html>

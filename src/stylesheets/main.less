@@ -1,4 +1,5 @@
-html, body {
+body,
+html {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -6,17 +7,62 @@ html, body {
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-family: sans-serif;
   color: #525252;
+  overflow: hidden;
 }
 
 a {
   text-decoration: none;
 }
 
+.fill {
+  min-height: 100%;
+  height: 100%;
+}
+
 .container {
   text-align: center;
+}
+
+.bingo-text {
+  margin-top: 15vmin;
+  font-size: 50vmin;
+  color: white;
+}
+
+.fa-stack {
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+}
+
+.stacked-icons {
+  text-align: center;
+}
+
+.fa-stack + .fa-stack {
+  margin-left: 0.3em;
+}
+
+.vmin {
+  font-size: 80vmin;
+}
+
+.carton-numbers {
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: red;
+  font-weight: bold;
+  font-size: 5.4vmin;
+  min-height: 80%;
+  height: 90%;
+}
+
+.dark{
+   color: #32383e;
+}
+
+.table td,
+.table th {
+  padding: 0.35rem;
 }
