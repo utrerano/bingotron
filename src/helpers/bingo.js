@@ -40,10 +40,10 @@ exports.nextBall = function() {
           exports.bingoStackOut.push(bingoNumber);
           exports.refreshTable();
           if (bingoNumber < 10) {
-            say.speak(bingoNumber, null,0.6);
+            say.speak(bingoNumber, nul);
           } else {
             bingoNumber = bingoNumber +' '+ Math.floor(bingoNumber / 10) +' ' +(bingoNumber % 10);
-            say.speak(bingoNumber, null,0.6);
+            say.speak(bingoNumber, null);
           }
           exports.nextBall(exports.timeStep, exports.bingoStack, exports.bingoStackOut);
         }
