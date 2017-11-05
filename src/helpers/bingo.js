@@ -39,7 +39,13 @@ exports.nextBall = function (){
         document.querySelector('#bingo-number').innerHTML = bingoNumber;
         exports.bingoStackOut.push(bingoNumber);
         exports.refreshTable();
-        say.speak(bingoNumber);
+        if(bingoNumber<10){
+          say.speak(bingoNumber);
+        }else{
+          say.speak(bingoNumber);
+          say.speak(Math.floor(bingoNumber/10));
+          say.speak(bingoNumber%10)
+        }
         exports.nextBall(exports.timeStep,exports.bingoStack,exports.bingoStackOut);
     }
   }, exports.timeStep);

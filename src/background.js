@@ -41,7 +41,7 @@ app.on('ready', () => {
     }));
   }
 
-  mainWindow.openDevTools();
+  // mainWindow.openDevTools();
 
   mainWindow.setMenu(null);
 });
