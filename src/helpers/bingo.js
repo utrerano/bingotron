@@ -27,99 +27,97 @@ exports.shuffle = function(array) {
   return array;
 }
 
-exports.fillBingoArray = function () {
-  var bingoNumbers = Array.from(new Array(90), (x,i) => i +1);
+exports.fillBingoArray = function() {
+  var bingoNumbers = Array.from(new Array(90), (x, i) => i + 1);
   return exports.shuffle(bingoNumbers);
 }
 
-exports.nextBall = function (){
-  exports.timeout = setTimeout(function() {
-    var bingoNumber = exports.bingoStack.shift();
-    if(bingoNumber!=undefined){
-        document.querySelector('#bingo-number').innerHTML = bingoNumber;
-        exports.bingoStackOut.push(bingoNumber);
-        exports.refreshTable();
-        if(bingoNumber<10){
-          say.speak(bingoNumber);
-        }else{
-          say.speak(bingoNumber);
-          say.speak(Math.floor(bingoNumber/10));
-          say.speak(bingoNumber%10)
+exports.nextBall = function() {
+    exports.timeout = setTimeout(function() {
+        var bingoNumber = exports.bingoStack.shift();
+        if (bingoNumber != undefined) {
+          document.querySelector('#bingo-number').innerHTML = bingoNumber;
+          exports.bingoStackOut.push(bingoNumber);
+          exports.refreshTable();
+          if (bingoNumber < 10) {
+            say.speak(bingoNumber, null,0.6);
+          } else {
+            bingoNumber = bingoNumber +' '+ Math.floor(bingoNumber / 10) +' ' +(bingoNumber % 10);
+            say.speak(bingoNumber, null,0.6);
+          }
+          exports.nextBall(exports.timeStep, exports.bingoStack, exports.bingoStackOut);
         }
-        exports.nextBall(exports.timeStep,exports.bingoStack,exports.bingoStackOut);
+        }, exports.timeStep);
     }
-  }, exports.timeStep);
-}
 
-exports.startBingo = function () {
-  document.querySelector('#start').style.display = 'none';
-  document.querySelector('#pause').style.display = 'block';
-  var timeStepStored = store.get('timeStep');
-  if(timeStepStored!=null)
-  exports.timeStep=timeStepStored;
-  exports.bingoStack = this.fillBingoArray();
-  exports.nextBall();
-}
-
-exports.pauseBingo = function(){
-  document.querySelector('#start').style.display = 'block';
-  document.querySelector('#pause').style.display = 'none';
-  if(exports.timeout){
-    clearTimeout(exports.timeout);
-  }
-}
-
-exports.resumeBingo = function(){
-  document.querySelector('#start').style.display = 'none';
-  document.querySelector('#pause').style.display = 'block';
-  exports.nextBall();
-}
-
-exports.resetBingo = function(){
-  if(exports.timeout){
-    clearTimeout(exports.timeout);
-  }
-  exports.bingoStackOut=[];
-  exports.startBingo();
-}
-
-exports.timeStepChange =function(up){
-  if(up){
-    exports.timeStep = exports.timeStep+200;
-  }
-  else {
-    exports.timeStep = exports.timeStep-200;
-  }
-  store.set('timeStep',exports.timeStep);
-}
-
-exports.displayList = function(){
-  if(document.querySelector('#player').style.display=='none'){
-    document.querySelector('#player').style.display ='block';
-    document.querySelector('#played').style.display ='none';
-  }else{
-    document.querySelector('#player').style.display ='none';
-    document.querySelector('#played').style.display ='block';
-    exports.refreshTable();
-  }
-}
-
-exports.refreshTable = function(){
-  var innerHTML = '';
-  for(var i =1;i<90;i++){
-    if(i%10==1){
-      innerHTML+='<tr>';
+    exports.startBingo = function() {
+      document.querySelector('#start').style.display = 'none';
+      document.querySelector('#pause').style.display = 'block';
+      var timeStepStored = store.get('timeStep');
+      if (timeStepStored != null)
+        exports.timeStep = timeStepStored;
+      exports.bingoStack = this.fillBingoArray();
+      exports.nextBall();
     }
-    if(exports.bingoStackOut.indexOf(i)>=0)
-      innerHTML+='<td>'+i+'</td>';
-    else {
-      innerHTML+='<td class="dark">'+i+'</td>';
 
+    exports.pauseBingo = function() {
+      document.querySelector('#start').style.display = 'block';
+      document.querySelector('#pause').style.display = 'none';
+      if (exports.timeout) {
+        clearTimeout(exports.timeout);
+      }
     }
-    if(i%10==0){
-      innerHTML+='</tr>';
+
+    exports.resumeBingo = function() {
+      document.querySelector('#start').style.display = 'none';
+      document.querySelector('#pause').style.display = 'block';
+      exports.nextBall();
     }
-  }
-  document.querySelector('#tableBody').innerHTML = innerHTML;
-  // console.log(innerHTML);
-}
+
+    exports.resetBingo = function() {
+      if (exports.timeout) {
+        clearTimeout(exports.timeout);
+      }
+      exports.bingoStackOut = [];
+      exports.startBingo();
+    }
+
+    exports.timeStepChange = function(up) {
+      if (up) {
+        exports.timeStep = exports.timeStep + 200;
+      } else {
+        exports.timeStep = exports.timeStep - 200;
+      }
+      store.set('timeStep', exports.timeStep);
+    }
+
+    exports.displayList = function() {
+      if (document.querySelector('#player').style.display == 'none') {
+        document.querySelector('#player').style.display = 'block';
+        document.querySelector('#played').style.display = 'none';
+      } else {
+        document.querySelector('#player').style.display = 'none';
+        document.querySelector('#played').style.display = 'block';
+        exports.refreshTable();
+      }
+    }
+
+    exports.refreshTable = function() {
+      var innerHTML = '';
+      for (var i = 1; i < 90; i++) {
+        if (i % 10 == 1) {
+          innerHTML += '<tr>';
+        }
+        if (exports.bingoStackOut.indexOf(i) >= 0)
+          innerHTML += '<td>' + i + '</td>';
+        else {
+          innerHTML += '<td class="dark">' + i + '</td>';
+
+        }
+        if (i % 10 == 0) {
+          innerHTML += '</tr>';
+        }
+      }
+      document.querySelector('#tableBody').innerHTML = innerHTML;
+      // console.log(innerHTML);
+    }
