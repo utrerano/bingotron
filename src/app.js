@@ -18,13 +18,18 @@ const osMap = {
   linux: 'Linux',
 };
 
-// document.querySelector('nav').height();
+debugger;
+$(document.querySelector('.carton-numbers')).css('top',$(document.querySelector('nav'))[0].offsetHeight + 'px')
 
 document.querySelector('#start').addEventListener('click', function () {
   if(bingo.bingoStackOut.length>0)
     bingo.resumeBingo();
   else
     bingo.startBingo();
+});
+
+document.querySelector('#refresh').addEventListener('click', function () {
+   bingo.resetBingo();
 });
 
 document.querySelector('#pause').addEventListener('click', function () {

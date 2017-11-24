@@ -1,6 +1,7 @@
-const say = require('say')
+const say = require('say');
 const Store = require('electron-store');
 const store = new Store();
+const dialog = require('electron').remote.dialog
 
 exports.timeStep = 0;
 exports.pause = false;
@@ -28,6 +29,7 @@ exports.shuffle = function(array) {
 }
 
 exports.fillBingoArray = function() {
+  debugger;
   var bingoNumbers = Array.from(new Array(90), (x, i) => i + 1);
   return exports.shuffle(bingoNumbers);
 }
@@ -40,7 +42,7 @@ exports.nextBall = function() {
           exports.bingoStackOut.push(bingoNumber);
           exports.refreshTable();
           if (bingoNumber < 10) {
-            say.speak(bingoNumber, nul);
+            say.speak(bingoNumber, null);
           } else {
             bingoNumber = bingoNumber +' '+ Math.floor(bingoNumber / 10) +' ' +(bingoNumber % 10);
             say.speak(bingoNumber, null);
@@ -75,11 +77,21 @@ exports.nextBall = function() {
     }
 
     exports.resetBingo = function() {
-      if (exports.timeout) {
-        clearTimeout(exports.timeout);
-      }
-      exports.bingoStackOut = [];
-      exports.startBingo();
+
+      dialog.showMessageBox({
+          type: 'question',
+          buttons: ['Si', 'Cancelar'],
+          title: 'Reiniciar',
+          message: '¿Estás seguro que quieres reiniciar?'
+      },function(index){
+          if(index==0){
+            if (exports.timeout) {
+              clearTimeout(exports.timeout);
+            }
+            exports.bingoStackOut = [];
+            exports.startBingo();
+          }
+      });
     }
 
     exports.timeStepChange = function(up) {
@@ -104,7 +116,7 @@ exports.nextBall = function() {
 
     exports.refreshTable = function() {
       var innerHTML = '';
-      for (var i = 1; i < 90; i++) {
+      for (var i = 1; i <= 90; i++) {
         if (i % 10 == 1) {
           innerHTML += '<tr>';
         }

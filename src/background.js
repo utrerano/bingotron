@@ -40,8 +40,8 @@ app.on('ready', () => {
       slashes: true,
     }));
   }
-
-  mainWindow.openDevTools();
+  mainWindow.maximize();
+  // mainWindow.openDevTools();
 
   mainWindow.setMenu(null);
 });
